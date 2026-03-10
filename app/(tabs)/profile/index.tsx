@@ -19,6 +19,13 @@ export default function ProfileScreen() {
     router.replace('/auth');
   };
 
+  const handleResetApp = () => {
+    // Clear all persisted state
+    useAppStore.getState().setHasSeenOnboarding(false);
+    useAppStore.getState().setAuthenticated(false);
+    router.replace('/');
+  };
+
   const initials = user.name
     .split(' ')
     .map((n) => n[0])
@@ -128,8 +135,13 @@ export default function ProfileScreen() {
         </View>
 
         <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut} activeOpacity={0.7}>
-          <Ionicons name="log-out-outline" size={18} color={Colors.error}  />
+          <Ionicons name="log-out-outline" size={18} color={Colors.error} />
           <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.resetBtn} onPress={handleResetApp} activeOpacity={0.7}>
+          <Ionicons name="refresh-outline" size={18} color={Colors.textTertiary} />
+          <Text style={styles.resetText}>Reset App (Dev)</Text>
         </TouchableOpacity>
 
         <Text style={styles.version}>Version 1.0.0</Text>
@@ -249,6 +261,22 @@ const styles = StyleSheet.create({
     fontSize: FontSize.md,
     fontWeight: FontWeight.medium,
     color: Colors.error,
+  },
+  resetBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    borderRadius: Radius.lg,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    marginBottom: 16,
+  },
+  resetText: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.medium,
+    color: Colors.textTertiary,
   },
   version: {
     textAlign: 'center',
